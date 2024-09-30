@@ -1,3 +1,4 @@
+'''Module server made with Flask to host and route web service correctly'''
 from flask import Flask, request, render_template
 from EmotionDetection.emotion_detection import emotion_detector
 
@@ -24,13 +25,13 @@ def emotion_analyser():
     response = emotion_detector(text_to_analyse)
 
     # Error Checking if value is left blank
-    if response['dominant_emotion'] == None:
+    if response['dominant_emotion'] is None:
         return "Invalid text! Please try again!"
 
-    else:
-        formatted_response = f"""For the given statement, the system response is 'anger': {response['anger']}, 
-        'disgust': {response['disgust']}, 'fear': {response['fear']}, 'joy': {response['joy']} and 
-        'sadness': {response['sadness']}. The dominant emotion is {response['dominant_emotion']}."""
+    formatted_response = f"""For the given statement, the system response is 'anger':
+    {response['anger']}, 'disgust': {response['disgust']}, 'fear': {response['fear']},
+    'joy': {response['joy']} and 'sadness': {response['sadness']}. The dominant emotion 
+    is {response['dominant_emotion']}."""
 
     return formatted_response
 
