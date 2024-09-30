@@ -23,9 +23,14 @@ def emotion_analyser():
 
     response = emotion_detector(text_to_analyse)
 
-    formatted_response = f"""For the given statement, the system response is 'anger': {response['anger']}, 
-    'disgust': {response['disgust']}, 'fear': {response['fear']}, 'joy': {response['joy']} and 
-    'sadness': {response['sadness']}. The dominant emotion is {response['dominant_emotion']}."""
+    # Error Checking if value is left blank
+    if response['dominant_emotion'] == None:
+        return "Invalid text! Please try again!"
+
+    else:
+        formatted_response = f"""For the given statement, the system response is 'anger': {response['anger']}, 
+        'disgust': {response['disgust']}, 'fear': {response['fear']}, 'joy': {response['joy']} and 
+        'sadness': {response['sadness']}. The dominant emotion is {response['dominant_emotion']}."""
 
     return formatted_response
 

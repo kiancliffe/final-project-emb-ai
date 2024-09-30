@@ -11,11 +11,26 @@ def emotion_detector(text_to_analyse):
     myobj = { "raw_document": { "text": text_to_analyse } }
 
     response = requests.post(url, json=myobj, headers=header)
+
     # Load response into json format
     formatted_response = json.loads(response.text)
-    # Extracts emotion and it's corresponding score from nested dictionary
-    emotion_scores = formatted_response['emotionPredictions'][0]['emotion']
-    max_emotion = max(emotion_scores, key=emotion_scores.get) # Gets max score 
-    emotion_scores['dominant_emotion'] = max_emotion # Appends max emotion to dict
 
+    if response.status_code == 200:
+        # Extracts emotion and it's corresponding score from nested dictionary
+        emotion_scores = formatted_response['emotionPredictions'][0]['emotion']
+        max_emotion = max(emotion_scores, key=emotion_scores.get) # Gets max score 
+        emotion_scores['dominant_emotion'] = max_emotion # Appends max emotion to dict
+ 
+    elif response.status_code == 400:
+        # Create a dictionary with the same structure but values set to None
+        emotion_scores = {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
+        
     return emotion_scores
+   
